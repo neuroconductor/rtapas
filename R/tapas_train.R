@@ -16,7 +16,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom mgcv gam predict.gam
 #' @importFrom rlang .data
-#' @importFrom stats quantile
+#' @importFrom stats median quantile
 #' @importFrom tibble tibble is_tibble
 #' @return A \code{list} with the TAPAS model (\code{tapas_model}) of class \code{gam} and
 #' a \code{tibble} with the clamp information (\code{clamp_data}). The clamp information contains the
@@ -129,15 +129,21 @@ tapas_train <- function(data, dsc_cutoff = 0.03, verbose = TRUE){
   # Calculate subject level threshold that produces maximum DSC
   subject_thresholds = data %>%
     dplyr::group_by(.data$subject_id) %>%
-    dplyr::slice(base::which.max(dsc)) %>%
+  # Take all thresholds that equal max(dsc). May be ties.
+    dplyr::slice(base::which(.data$dsc == base::max(.data$dsc), arr.ind = TRUE)) %>%
+  # In the event of ties take the median
+    dplyr::summarise_all(median) %>%
     dplyr::ungroup() %>%
     dplyr::select(-.data$volume)
 
   # Calculate the threshold that maximizes group level average DSC
   group_threshold = data %>%
     dplyr::group_by(.data$threshold) %>%
-    dplyr::summarize(mean_dsc = mean(dsc)) %>%
-    dplyr::slice(base::which.max(.data$mean_dsc)) %>%
+    dplyr::summarize(mean_dsc = base::mean(dsc)) %>%
+  # Take all thresholds that equal max(dsc). May be ties.
+    dplyr::slice(base::which(.data$mean_dsc == max(.data$mean_dsc), arr.ind = TRUE)) %>%
+  # In the event of ties take the median
+    dplyr::summarize_all(median) %>%
     dplyr::select(.data$threshold)
 
   # Obtain the group level volume from using the group_threshold
