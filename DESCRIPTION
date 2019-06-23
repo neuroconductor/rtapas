@@ -21,10 +21,10 @@ Suggests: covr, knitr, remotes, bookdown, rmarkdown, testthat
 VignetteBuilder: knitr
 ByteCompile: true
 RoxygenNote: 6.1.1
-biocViews:
 Repository: Neuroconductor
 Remotes:  
     avalcarcel9/aliviateR,
     RMHogervorst/badgecreatr,
     neuroconductor/oro.nifti@acbc87a93512a48ae9e627823b8a08337da59bcc,
     neuroconductor/neurobase@96abd32e868c588567869749268993766f421bfa
+biocViews: 
