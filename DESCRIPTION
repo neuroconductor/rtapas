@@ -22,9 +22,9 @@ VignetteBuilder: knitr
 ByteCompile: true
 RoxygenNote: 6.1.1
 Language: en-US
+biocViews:
 Repository: Neuroconductor
 Remotes:  
     avalcarcel9/aliviateR,
     neuroconductor/oro.nifti@c8832b410ec2ccd86b23e23db79d8d0291fecb2a,
     neuroconductor/neurobase@69edde6d85b13cf182ed5990e6c4166795128977
-biocViews: 
