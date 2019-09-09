@@ -37,16 +37,38 @@ env:
   - _R_CHECK_FORCE_SUGGESTS_=false
 r_check_args: "--as-cran --install-args=--build"
 before_install:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install libcgal-dev libglu1-mesa-dev mesa-common-dev; fi
-  - wget -O travis_helpers.sh http://bit.ly/travis_helpers
-  - source travis_helpers.sh
-  - rm travis_helpers.sh
-  - PACKAGE_NAME=`package_name`
-  - PACKAGE_DIRECTORY=`basename ${PWD}`
-
-apt_packages:
-  - texinfo
-
+- ulimit -n 2048
+- export PROJ_DIR=`basename $PWD`
+- fname=travis_helpers.sh
+- wget -O ${fname} http://bit.ly/travis_helpers
+- cat ${fname}; source ${fname}; rm ${fname}
+- cat DESCRIPTION
+- codename=`linux_codename`;
+- if [ "${codename}" = "trusty" ]; then start_xvfb ; fi
+- export rver=`r_version`; echo $rver ;
+- if [ "$TRAVIS_OS_NAME" = "osx" ]; then no_open_mp ; brew install -v freetype ; fi
+- jags_install || true;
+- v8_install || true;
+- dcmtk_install || true;
+- gsl_install 2.1 || true ;
+- export cmake_version="3.11"
+- cmake --version
+- x=`cmake_setup`; echo "${x}"; eval ${x};
+- cmake --version
+- remove_neuroc_packages
+- cat DESCRIPTION
+- install_remotes_no_dep
+- cat DESCRIPTION
+- export PACKAGE_NAME=`package_name`
+- echo "Package Name is $PACKAGE_NAME"
+- if [[ "${PACKAGE_NAME}" == "waveslim" ]]; then fftw_install ; fi
+- if [[ "${PACKAGE_NAME}" == "dti" || "${PACKAGE_NAME}" == "qMRI" ]]; then gsl_install
+  ; fi
+- if [[ "${PACKAGE_NAME}" == "ROpenCVLite" || "${PACKAGE_NAME}" == "Rvision" ]]; then
+  shopt -s expand_aliases ; x=`Rscript -e "cat(Sys.which('R'))"` ; echo "reset R"
+  ; alias R="travis_wait 100 ${x}" ; fi
+- install_python_requirements ;
+- R CMD javareconf ;
 after_success:
 - dump_logs
 after_failure:
@@ -69,7 +91,7 @@ deploy:
   on:
     tags: true
   api-key:
-    secure: Qj224oHrS2/7MMUVV4q7uTEhinhtdjTLDT78Y1yGTVaqSbiMnISlk64BOzXKH6yUeW2QwVSG5zSFAsWyWTUoYGKrh4yJkOFokvS8hBhfz0jIzslF9BLmlcL+4n8oyQsfgLtzHVX384RY4X4beEN7NRVJW+TTB1xiXNIW5XMcuPGtQhaw0yeESJvlrM1x289vmB7hETIrXRLwxj0N6RwonyJN9Pbc3zf/iktTEA7ulOQkOUQYHmBpkEiYMda87epwUnOrHatje/ubmE7aMEH+Ao1NrHvYW5S065OlH5/yAhwOcSXIzNMUNFe3T3KSy5jLVZqDa0yKCPtrQRokXFYTgBQsztAXo54/1w5id2YwPH8vq+iEHa5WW+KciZvJ3MG3BMz7A5IfD7wMYY6ZeW93ZTxAFn3QUUJHBZ9DRokGEk9YIadMTgh7FVK4wInNgIbKidWtd8PLUxOA3JDktj+JCtNOGcCtiCd94HNDjw7hRl9LGi4TOLuZDibLLrbZ5YMOjnj6jcotaOWUnvyqDn/PLD/3X8SfW1pXymrAWR2RPCm/XzMDUm7PinNloTLMnNy1TbMHPIdWm6RuMTkzULcpdJzZ4YPtGy/j4d1M3YExKtDmNry4Mw0eOU2G/fuJk3N4IkWmAKRip+uvQPoj69KWu1+tiX0QEm0l12tZcWLQnZo=
+    secure: RHdMxql+edLbnmFrlMrGL6oIiu372gL9HCoK6lcVJY36oAuw9aNBxNpWxJYUKOYFwo0tRPR2IFUQqhfzTgXKPiuYt+O5a70zoI3tJJsryJAjEpTYw3ak+UFy5mMELyCnollUfkxHyaqlFdg2u6Gjr82gkmmd2OLy9Zz01eo8Rr/bu0jVSpU8jfPTq3rdSz36KNQYCRm6YaGt2mxQv0o7C7/2AWgFbQ4tOZ9BJeTA+hln5Ot/jdP22lnCMn3AgPgroidWj1VG7Vna+lJjgm50NnqhjfLGoPzmhN4zsoJII9gLsL9YDhFrNBQKH2GBE/XIetsACYycEyCWNLo4RnYCvbfI6kDj8D9vcK51XC9unouC8nxGCUtjl1nuUy9cV0v6x7pJXXOJq+Pi95J3R0RT8nlJTV+EZ1ZGsnC2Dd5ESY6XXoTwkSN2pgH9VogLl4+JfFecEBlFcWYKPIo1qLGKJVgS22l/jhHOAuuhr5XIfGqEsMsMziAJ4za9fOsU6/8FwSqFbhYmY9E48jrRrt/MeSYaD2jFhLplq/SR/7W/V3YN/Lyfxdu+voBSd18BR9B0yE4FehsxZSUAnIYaRvKXIiroXmNRORKs+RbUauW58dmVnaPCHgeDQc4NzVqAe/cLk0pLwyN0DR48Qy3k5lTHNv6DnYq+f2vSZ3v1wVTH2bQ=
 after_deploy:
 - echo "${PROJECT_NAME}" | grep -q "releases"; if [[ $? -eq 0 ]]; then run_coverage="false";
   else run_coverage=; fi;
