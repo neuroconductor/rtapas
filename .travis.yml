@@ -91,7 +91,7 @@ deploy:
   on:
     tags: true
   api-key:
-    secure: hpGSfFL6GcP56mr13urN/coct6OiHG0Kncrl1qTqG7xstLLrqKOCvKUz8v6oiYp2ZQqFnn9jXvRy4J61+OG/psUfHrBanx36x7Y3/glbd8OEnAhF3Zoy5Wt5gdNpB6e80wNPHi4wmn/IAAWmPeTdrsbz8WUSl7Q1BHWwzG+dvw+bL2SHLADgQQqAX6NtMZzkVZDKiu0Fjg0OkKU54m2LE7jpFZHzNgCFgS13gRGkHq4kXFFmpSeZGxOWFz5/G76o4DgK8OUOM+MdiHt8Y92nE3OKZfiTYvcsiFt8FG2ogwvbXI3a5yfRdknrWhbq4pva6IQGDIChwKLTvvgs09K9HbsIl/gKv2U4lxKPUq9ljXDvVudOlcJz7Ma/uu32H0P8lj/BfG3U10FmZC+JadsvE1TOUMVBGkATtyVV3QP5TCaJolE3HT3VRteq2a9aYTfeG3kUklRgLpZj3OdmfqGafTp45ry3JMTs5imPMDVmhHVFjhG+UuBQM/9bng/9+H3BCWexxDKQm3cj0OE/vs5LaeyYEkrVmFLq8b97RRMIp77KN8UY7zn8a3Dai5qHbdDAR7bPCYkrByBivqOeGRJoaoMW/4qTVDgDc6iwn3JCrBQLkQy4WdXgX/OclwcNxkKlc3+JG3aBhcdJ4FgyrxjrZc1SpcrEtRINMP0IjO8+bF8=
+    secure: DJKmO0c/JGOING57lYVhiVxkvnMUMOEFlDPpgD80MNKKjXqCN0bynKiqHQ78YRCBkY4qinkZyDXL/KLOS5Z/vO7aLKzLLvecWNyrTXWEi4jl8VQ4i1MjQRZUwI/QUJmpj2h00/3kUTYiD0a4VqEBkJP+iLTFSGwDZ+HGGryeQDtQe6Dtgsfzsdg3FNAzUJec+2VnrbonJSGJp1w4WqMFmV47YOft6OtaGZTIMmplSsWOB8E5QdB3AmOdHKbpe6vTtg3Kfzwe+uRRlqyhzXTl8zILNPbNzXpAHXfW8GKXSUebbYzK+bLbwbBoqJSzojjed/e1WKWBirl/8oCag6sK88yhGqLwSX/C1Se1W8RkEfsdooO2eSNOo45HkG1Z8RUlLj7s0c3cr35DHUxXmRs54615WYOF6AGehMEnOu/SwUVCl3pu3Cg1tqTRJ1uZ7ukP2aepa91kZTM8fRRfDwx30pu8ia2IhRVpVprhHjc6LtE4c5Aqg7jiMVqJirrosdxp9tBNN2o1fCo5Mg+jIwaQyNYVPALTOG+mvMcEJJh9qfQrDQ4XkMlzmoEP8B9+fVFMi3N5mb2A2NPusV/R6kRdUOYpMWYoto7BxJ6bTEzKJUOvW8koKXbCvszW/6Qhk5JQgEa+XUGcQTXgKC2m2t5z7cK0x5puv0cgFFTX/CTfb8A=
 after_deploy:
 - echo "${PROJECT_NAME}" | grep -q "releases"; if [[ $? -eq 0 ]]; then run_coverage="false";
   else run_coverage=; fi;
@@ -99,4 +99,4 @@ after_deploy:
   -z "${run_coverage}" ]]; then echo 'covr::coveralls(type = "all", quiet = FALSE)'
   > neuroc_covr.R ; travis_wait 100 Rscript neuroc_covr.R ; rm neuroc_covr.R ; fi
 
-#neuroc.deps version (SHA): e5824ce
+#neuroc.deps version (SHA): a5aa5ca
