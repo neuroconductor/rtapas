@@ -26,5 +26,5 @@ biocViews:
 Repository: Neuroconductor
 Remotes:  
     avalcarcel9/aliviateR,
-    neuroconductor/oro.nifti@a8dbb332034761e3ea64ca63d5037a95167d871d,
-    neuroconductor/neurobase@d94ed432744ec7177d5741cf17314882a0952b62
+    neuroconductor/oro.nifti@59bdaa67daeeaa3153bc2f19e2a2c0ea8c8286d0,
+    neuroconductor/neurobase@430fc44d6f51a9a4941c86ae0edf6c4eaab6151d
