@@ -17,3 +17,5 @@
 ^build\.sh$
 ^run\.sh$
 ^Dockerfile$
+^DESCRIPTION\.bak$
+^\./\.travis\.yml\.bak$
