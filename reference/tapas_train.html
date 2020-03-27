@@ -8,6 +8,13 @@
 
 <title>TAPAS Model Training — tapas_train • rtapas</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -17,16 +24,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,8 +48,9 @@
 
 <meta property="og:title" content="TAPAS Model Training — tapas_train" />
 <meta property="og:description" content="This function trains the TAPAS model using all binded subject-level tibbles produced
-from the tapas_data function. The TAPAS model is fit and clamp data is calculated. The clamp data
+from the tapas_data() function. The TAPAS model is fit and clamp data is calculated. The clamp data
 contains the predicted threshold when using the 10th and 90th percentile volume from training data." />
+<meta property="og:image" content="https://avalcarcel9.github.io/rtapas/logo.svg" />
 
 
 
@@ -56,7 +68,7 @@ contains the predicted threshold when using the 10th and 90th percentile volume 
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +82,7 @@ contains the predicted threshold when using the 10th and 90th percentile volume 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rtapas</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -125,18 +137,18 @@ contains the predicted threshold when using the 10th and 90th percentile volume 
 
     <div class="ref-description">
     <p>This function trains the TAPAS model using all binded subject-level <code>tibble</code>s produced
-from the <code>tapas_data</code> function. The TAPAS model is fit and clamp data is calculated. The clamp data
+from the <code>tapas_data()</code> function. The TAPAS model is fit and clamp data is calculated. The clamp data
 contains the predicted threshold when using the 10th and 90th percentile volume from training data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tapas_train</span>(<span class='no'>data</span>, <span class='kw'>dsc_cutoff</span> <span class='kw'>=</span> <span class='fl'>0.03</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>tapas_train</span>(<span class='no'>data</span>, <span class='kw'>dsc_cutoff</span> <span class='kw'>=</span> <span class='fl'>0.03</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Data resulting from <code>tapas_data</code>. The <code>data</code> should be a <code>tibble</code> or
+      <td><p>Data resulting from <code>tapas_data()</code>. The <code>data</code> should be a <code>tibble</code> or
 <code>data.frame</code> containing binded subject data or a <code>list</code> object with subject data in each element.
 Data from these subjects will be used for model training.</p></td>
     </tr>
@@ -151,14 +163,20 @@ will be included in training the TAPAS model.</p></td>
       <th>verbose</th>
       <td><p>A <code>logical</code> argument to print messages. Set to <code>TRUE</code> by default.</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments to pass to <code><a href='https://rdrr.io/pkg/mgcv/man/gam.html'>gam</a></code></p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>list</code> with the TAPAS model (<code>tapas_model</code>) of class <code>gam</code> and
-a <code>tibble</code> with the clamp information (<code>clamp_data</code>). The clamp information contains the
-TAPAS-predicted smallest and largest threshold to be applied by using estimates related to the volume at the
-10th and 90th percentile.</p>
+    <p>A <code>list</code> with the TAPAS model (<code>tapas_model</code>) of class
+<code>gam</code>, the group-level threshold, a <code>tibble</code> with the clamp
+information (<code>clamp_data</code>), and a <code>tibble</code> with the training
+data. The clamp information contains the TAPAS-predicted smallest and
+largest threshold to be applied by using estimates related to the volume at
+the 10th and 90th percentile.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -235,16 +253,14 @@ TAPAS-predicted smallest and largest threshold to be applied by using estimates 
 <span class='no'>tapas_model</span>$<span class='no'>group_threshold</span>
 <span class='co'># The lower and upper bound clamps to avoid extrapolation</span>
 <span class='no'>tapas_model</span>$<span class='no'>clamp_data</span>
+<span class='co'># The training data for the TAPAS `mgcv::gam` function</span>
+<span class='no'>tapas_model</span>$<span class='no'>train_data</span>
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -255,7 +271,7 @@ TAPAS-predicted smallest and largest threshold to be applied by using estimates 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
 </div>
 
       </footer>
